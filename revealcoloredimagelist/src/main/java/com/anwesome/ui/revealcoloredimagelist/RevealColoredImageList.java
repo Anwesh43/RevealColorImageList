@@ -39,7 +39,7 @@ public class RevealColoredImageList  extends ViewGroup{
         for(int i=0;i<getChildCount();i++) {
             View child = getChildAt(i);
             child.layout(left,y,right,y+sizeOfView);
-            y+=sizeOfView;
+            y+=(11*sizeOfView)/10;
         }
     }
     public void addImage(Bitmap bitmap,int color) {

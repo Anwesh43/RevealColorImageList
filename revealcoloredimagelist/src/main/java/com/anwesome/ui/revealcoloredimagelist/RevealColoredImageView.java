@@ -32,17 +32,17 @@ public class RevealColoredImageView extends View {
         h = canvas.getHeight();
         if(time == 0) {
             screen = new Screen();
-            bitmap = Bitmap.createScaledBitmap(bitmap,9*w/10,3*w/5,true);
+            bitmap = Bitmap.createScaledBitmap(bitmap,9*w/10,w/2,true);
             screenExpander = new ScreenExpander();
         }
         canvas.drawColor(Color.WHITE);
-        canvas.drawBitmap(bitmap,w/20,w/5,paint);
+        canvas.drawBitmap(bitmap,w/20,w/5+w/10,paint);
         canvas.save();
         canvas.translate(0,screen.y);
         screenExpander.draw(canvas,paint);
         int color = Color.argb(150,Color.red(this.color),Color.green(this.color),Color.blue(this.color));
         paint.setColor(color);
-        canvas.drawRect(new RectF(w/20,w/5,w-w/20,4*w/5),paint);
+        canvas.drawRect(new RectF(w/20,w/5+w/10,w-w/20,4*w/5),paint);
         canvas.restore();
         time++;
     }
