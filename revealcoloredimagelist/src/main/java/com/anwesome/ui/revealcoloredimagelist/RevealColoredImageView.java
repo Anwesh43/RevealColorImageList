@@ -48,6 +48,7 @@ public class RevealColoredImageView extends View {
         if(screen != null && screenExpander != null) {
             screen.updateY(factor);
             screenExpander.update(factor);
+            postInvalidate();
         }
     }
     public boolean onTouchEvent(MotionEvent event) {
