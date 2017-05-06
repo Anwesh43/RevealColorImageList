@@ -21,3 +21,5 @@
 ```
     revealColorImageList.show();
 ```
+
+<img src="https://github.com/Anwesh43/RevealColorImageList/blob/master/demo/revealcolorimagelist.gif" width="300px" height="500px"/>
