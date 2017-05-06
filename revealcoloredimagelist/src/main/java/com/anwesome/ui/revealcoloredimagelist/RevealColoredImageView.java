@@ -16,18 +16,25 @@ public class RevealColoredImageView extends View {
     private Bitmap bitmap;
     private int color;
     private int time = 0;
+    private int w,h;
+    private Screen screen;
     public RevealColoredImageView(Context context, Bitmap bitmap,int color) {
         super(context);
         this.color = color;
         this.bitmap = bitmap;
     }
     public void onDraw(Canvas canvas) {
-        int w = canvas.getWidth();
+        w = canvas.getWidth();
+        h = canvas.getHeight();
         if(time == 0) {
-            bitmap = Bitmap.createScaledBitmap(bitmap,w,3*w/5,true);
+            screen = new Screen();
+            bitmap = Bitmap.createScaledBitmap(bitmap,9*w/10,3*w/5,true);
         }
         canvas.drawColor(Color.WHITE);
-        canvas.drawBitmap(bitmap,0,w/5,paint);
+        canvas.drawBitmap(bitmap,0,w/20,paint);
+        canvas.save();
+        canvas.translate(0,screen.y);
+        canvas.restore();
         time++;
     }
     public boolean onTouchEvent(MotionEvent event) {
@@ -35,5 +42,15 @@ public class RevealColoredImageView extends View {
 
         }
         return true;
+    }
+    private class Screen {
+        private float y,initY;
+        public Screen() {
+            this.y = 4*h/5;
+            this.initY = this.y;
+        }
+        public void updateY(float factor) {
+            y = initY*(1-factor);
+        }
     }
 }
