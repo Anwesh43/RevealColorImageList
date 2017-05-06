@@ -20,10 +20,12 @@ public class RevealColoredImageView extends View {
     private int w,h;
     private Screen screen;
     private ScreenExpander screenExpander;
+    private AnimationHandler animationHandler;
     public RevealColoredImageView(Context context, Bitmap bitmap,int color) {
         super(context);
         this.color = color;
         this.bitmap = bitmap;
+        animationHandler = new AnimationHandler(this);
     }
     public void onDraw(Canvas canvas) {
         w = canvas.getWidth();
@@ -83,7 +85,7 @@ public class RevealColoredImageView extends View {
             paint.setStrokeWidth(size/10);
             for(int i=0;i<2;i++) {
                 canvas.save();
-                canvas.rotate(i*deg);
+                canvas.rotate(i*90);
                 canvas.drawLine(-size/2,0,size/2,0,paint);
                 canvas.restore();
             }
@@ -96,6 +98,12 @@ public class RevealColoredImageView extends View {
             y-=screen.y;
             boolean condition = x>=this.x - this.size && x<=this.x+this.size && y>=this.y-this.size && y<=this.y+this.size;
             if(condition) {
+                if(dir == 1) {
+                    animationHandler.start();
+                }
+                else if(dir == -1) {
+                    animationHandler.end();
+                }
                 dir *= -1;
             }
             return condition;
