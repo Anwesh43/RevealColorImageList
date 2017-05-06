@@ -53,4 +53,37 @@ public class RevealColoredImageView extends View {
             y = initY*(1-factor);
         }
     }
+    private class ScreenExpander {
+        private float deg = 0,size,x,y,dir = 1;
+        public ScreenExpander() {
+            this.size = h/20;
+            this.x = 17*w/20;
+            this.y = h/20;
+        }
+        public void draw(Canvas canvas,Paint paint) {
+            paint.setColor(Color.BLACK);
+            canvas.save();
+            canvas.translate(x,y);
+            canvas.rotate(deg);
+            paint.setStrokeWidth(size/10);
+            for(int i=0;i<2;i++) {
+                canvas.save();
+                canvas.rotate(i*deg);
+                canvas.drawLine(-size/2,0,size/2,0,paint);
+                canvas.restore();
+            }
+            canvas.restore();
+        }
+        public void update(float factor) {
+            deg = 45*factor;
+        }
+        public boolean handleTap(float x,float y) {
+            y-=screen.y;
+            boolean condition = x>=this.x - this.size && x<=this.x+this.size && y>=this.y-this.size && y<=this.y+this.size;
+            if(condition) {
+                dir *= -1;
+            }
+            return condition;
+        }
+    }
 }
