@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -33,16 +34,19 @@ public class RevealColoredImageView extends View {
             screenExpander = new ScreenExpander();
         }
         canvas.drawColor(Color.WHITE);
-        canvas.drawBitmap(bitmap,0,w/20,paint);
+        canvas.drawBitmap(bitmap,w/20,w/5,paint);
         canvas.save();
         canvas.translate(0,screen.y);
         screenExpander.draw(canvas,paint);
+        int color = Color.argb(150,Color.red(this.color),Color.green(this.color),Color.blue(this.color));
+        paint.setColor(color);
+        canvas.drawRect(new RectF(w/20,w/5,w-w/20,4*w/5),paint);
         canvas.restore();
         time++;
     }
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX(),y = event.getY();
-        if(event.getAction() == MotionEvent.ACTION_DOWN)  {
+        if(event.getAction() == MotionEvent.ACTION_DOWN && screenExpander != null)  {
             screenExpander.handleTap(x,y);
         }
         return true;
