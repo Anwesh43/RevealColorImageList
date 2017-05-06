@@ -18,6 +18,7 @@ public class RevealColoredImageView extends View {
     private int time = 0;
     private int w,h;
     private Screen screen;
+    private ScreenExpander screenExpander;
     public RevealColoredImageView(Context context, Bitmap bitmap,int color) {
         super(context);
         this.color = color;
@@ -29,17 +30,20 @@ public class RevealColoredImageView extends View {
         if(time == 0) {
             screen = new Screen();
             bitmap = Bitmap.createScaledBitmap(bitmap,9*w/10,3*w/5,true);
+            screenExpander = new ScreenExpander();
         }
         canvas.drawColor(Color.WHITE);
         canvas.drawBitmap(bitmap,0,w/20,paint);
         canvas.save();
         canvas.translate(0,screen.y);
+        screenExpander.draw(canvas,paint);
         canvas.restore();
         time++;
     }
     public boolean onTouchEvent(MotionEvent event) {
+        float x = event.getX(),y = event.getY();
         if(event.getAction() == MotionEvent.ACTION_DOWN)  {
-
+            screenExpander.handleTap(x,y);
         }
         return true;
     }
